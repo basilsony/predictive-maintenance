@@ -27,7 +27,7 @@ np.random.seed(1234)
 PYTHONHASHSEED = 0
 
 # Parameters
-NUM_LOOPS = 5
+NUM_LOOPS = 50
 MIN_SEQUENCE_LENGTH = 50
 TRAINING_PARAMS = dict(
     epochs=10,
@@ -231,8 +231,7 @@ seq_array_test_last = [
 ]
 
 seq_array_test_last = np.asarray(seq_array_test_last).astype(np.float32)
-seq_array_test_last = seq_array_test_last.append(seq_array_test_last)
-seq_array_test_last = seq_array_test_last.append(seq_array_test_last)
+
 y_mask = [
     len(test_df[test_df['id'] == id]) >= MIN_SEQUENCE_LENGTH
     for id in test_df['id'].unique()
