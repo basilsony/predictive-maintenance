@@ -245,22 +245,29 @@ scores_test = model.evaluate(seq_array_test_last,
                              label_array_test_last,
                              verbose=2)
 accuracy_test = scores_test[1]
+num_rows = len(seq_array_test_last)
+while num_rows<10000:
+    new_df = np.append(seq_array_test_last, seq_array_test_last, axis=0)
+    num_rows = len(new_df)
+    
+
 
 # make predictions and compute confusion matrix
 # Benchmark inferencing
 test_times = []
 for _ in range(NUM_LOOPS):
     start_time_test = timer()
-    y_pred_test = model.predict_classes(seq_array_test_last)
+    y_pred_test = model.predict_classes(new_df)
     end_time_test = timer()
+    y_pred_test1 = model.predict_classes(seq_array_test_last)
     test_times.append(end_time_test-start_time_test)
 logger.info('Inferencing Benchmark \n%s\n%s\n\n', STATS, calculate_stats(test_times))
 
 y_true_test = label_array_test_last
-cm_test = confusion_matrix(y_true_test, y_pred_test)
+cm_test = confusion_matrix(y_true_test, y_pred_test1)
 
-precision_test = precision_score(y_true_test, y_pred_test)
-recall_test = recall_score(y_true_test, y_pred_test)
+precision_test = precision_score(y_true_test, y_pred_test1)
+recall_test = recall_score(y_true_test, y_pred_test1)
 f1_test = 2 * (precision_test * recall_test) / (precision_test + recall_test)
 
 logger.info(
@@ -270,4 +277,4 @@ logger.info(
     "Precision: %.2f\n"
     "Recall: %.2f\n"
     "F1 score: %.2f\n"
-    "Confusion Matrix: \n%s", len(label_array_test_last), accuracy_test, precision_test, recall_test, f1_test, cm_test)
+    "Confusion Matrix: \n%s", len(new_df), accuracy_test, precision_test, recall_test, f1_test, cm_test)
