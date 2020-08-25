@@ -246,10 +246,13 @@ scores_test = model.evaluate(seq_array_test_last,
                              verbose=2)
 accuracy_test = scores_test[1]
 num_rows = len(seq_array_test_last)
-while num_rows<10000:
-    new_df = np.append(seq_array_test_last, seq_array_test_last, axis=0)
+new_df = np.append(seq_array_test_last, seq_array_test_last, axis=0)
+
+print('Started Duplicating Data')
+while num_rows<16000:
+    new_df = np.append(new_df, new_df, axis=0)
     num_rows = len(new_df)
-    
+print('Completed Duplicating Data')    
 
 
 # make predictions and compute confusion matrix
