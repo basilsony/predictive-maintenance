@@ -254,6 +254,8 @@ while num_rows<16000:
     num_rows = len(new_df)
 print('Completed Duplicating Data')    
 
+new_df = new_df[0:20000, :]
+
 
 # make predictions and compute confusion matrix
 # Benchmark inferencing
